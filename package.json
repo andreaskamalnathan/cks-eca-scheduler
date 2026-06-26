@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "test.e2e": "cypress run",
     "test.unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@capacitor/app": "8.1.0",
@@ -19,8 +21,11 @@
     "@capacitor/status-bar": "8.0.2",
     "@ionic/react": "^8.5.0",
     "@ionic/react-router": "^8.5.0",
+    "@supabase/supabase-js": "^2.108.2",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.18.0",
+    "firebase": "^12.15.0",
     "ionicons": "^7.4.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -42,6 +47,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "gh-pages": "^6.3.0",
     "globals": "^15.15.0",
     "jsdom": "^22.1.0",
     "terser": "^5.4.0",

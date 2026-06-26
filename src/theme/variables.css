@@ -1,2 +1,394 @@
-/* For information on how to create your own theme, please refer to:
-http://ionicframework.com/docs/theming/ */
+/* ============================================================
+   ECA Scheduler — Theme Variables
+   Dark theme is the default (:root).
+   Light theme is activated via [data-theme="light"] on <html>.
+   ============================================================ */
+
+/* ── DARK THEME (default) ─────────────────────────────────── */
+:root {
+    /** Modern Indigo & Slate Theme Palette **/
+    --ion-color-primary: #4f46e5;
+    --ion-color-primary-rgb: 79, 70, 229;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-shade: #4338ca;
+    --ion-color-primary-tint: #6366f1;
+
+    --ion-color-dark: #f8fafc;
+    --ion-color-dark-rgb: 248, 250, 252;
+    --ion-color-dark-contrast: #0f172a;
+    --ion-color-dark-shade: #cbd5e1;
+    --ion-color-dark-tint: #cbd5e1;
+
+    --ion-background-color: #0b0f19;
+    --ion-background-color-rgb: 11, 15, 25;
+
+    --ion-text-color: #cbd5e1;
+    --ion-text-color-rgb: 203, 213, 225;
+
+    --ion-item-background: #131b2e;
+    --ion-card-background: #131b2e;
+
+    /* Custom design tokens */
+    --eca-bg-primary:    #0a0e1a;
+    --eca-bg-secondary:  #0f172a;
+    --eca-bg-card:       rgba(15, 23, 42, 0.65);
+    --eca-bg-item:       rgba(15, 23, 42, 0.25);
+    --eca-bg-input:      #0f172a;
+    --eca-bg-list:       rgba(15, 23, 42, 0.45);
+
+    --eca-border:        rgba(255, 255, 255, 0.08);
+    --eca-border-subtle: rgba(255, 255, 255, 0.06);
+    --eca-border-input:  rgba(255, 255, 255, 0.10);
+
+    --eca-text-primary:  #f1f5f9;
+    --eca-text-secondary:#cbd5e1;
+    --eca-text-muted:    #64748b;
+    --eca-text-label:    #94a3b8;
+
+    --eca-navbar-bg:     #0f172a;
+    --eca-navbar-border: rgba(255, 255, 255, 0.06);
+    --eca-navbar-text:   #94a3b8;
+    --eca-navbar-active: #ffffff;
+
+    --eca-drawer-bg:     #0f172a;
+    --eca-drawer-border: #1e293b;
+
+    --eca-shadow-card:   0 10px 25px -5px rgba(0, 0, 0, 0.4);
+    --eca-shadow-navbar: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    --eca-modal-card:    #1e293b;
+    --eca-modal-border:  #334155;
+
+    --eca-segment-bg:    rgba(255, 255, 255, 0.05);
+    --eca-segment-border:rgba(255, 255, 255, 0.08);
+    --eca-segment-active-bg: rgba(79, 70, 229, 0.25);
+    --eca-segment-active-text: #a5b4fc;
+
+    --eca-color-success: #6ee7b7;
+    --eca-color-warning: #fcd34d;
+    --eca-color-danger:  #fca5a5;
+
+    --eca-content-gradient: linear-gradient(135deg, #0a0e1a 0%, #0f172a 50%, #0a1628 100%);
+    --eca-toolbar-bg:    #0f172a;
+}
+
+/* ── LIGHT THEME ──────────────────────────────────────────── */
+[data-theme="light"] {
+    --ion-color-primary: #4338ca;
+    --ion-color-primary-rgb: 67, 56, 202;
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-shade: #3730a3;
+    --ion-color-primary-tint: #4f46e5;
+
+    --ion-color-dark: #1e293b;
+    --ion-color-dark-rgb: 30, 41, 59;
+    --ion-color-dark-contrast: #f8fafc;
+    --ion-color-dark-shade: #334155;
+    --ion-color-dark-tint: #475569;
+
+    --ion-background-color: #eef2f7;
+    --ion-background-color-rgb: 238, 242, 247;
+
+    --ion-text-color: #0f172a;
+    --ion-text-color-rgb: 15, 23, 42;
+
+    --ion-item-background: #ffffff;
+    --ion-card-background: #ffffff;
+
+    /* Custom design tokens — light equivalents */
+    --eca-bg-primary:    #eef2f7;
+    --eca-bg-secondary:  #dde3ee;
+    --eca-bg-card:       rgba(255, 255, 255, 0.92);
+    --eca-bg-item:       rgba(248, 250, 252, 0.95);
+    --eca-bg-input:      #ffffff;
+    --eca-bg-list:       rgba(226, 232, 240, 0.65);
+
+    --eca-border:        rgba(71, 85, 105, 0.15);
+    --eca-border-subtle: rgba(71, 85, 105, 0.10);
+    --eca-border-input:  rgba(71, 85, 105, 0.25);
+
+    --eca-text-primary:  #0f172a;
+    --eca-text-secondary:#1e293b;
+    --eca-text-muted:    #475569;
+    --eca-text-label:    #334155;
+
+    --eca-navbar-bg:     #ffffff;
+    --eca-navbar-border: rgba(71, 85, 105, 0.12);
+    --eca-navbar-text:   #334155;
+    --eca-navbar-active: #0f172a;
+
+    --eca-drawer-bg:     #f8fafc;
+    --eca-drawer-border: #e2e8f0;
+
+    --eca-shadow-card:   0 4px 20px -4px rgba(15, 23, 42, 0.12), 0 1px 4px rgba(15, 23, 42, 0.06);
+    --eca-shadow-navbar: 0 2px 10px rgba(15, 23, 42, 0.10);
+
+    --eca-modal-card:    #ffffff;
+    --eca-modal-border:  #cbd5e1;
+
+    --eca-segment-bg:    rgba(71, 85, 105, 0.08);
+    --eca-segment-border:rgba(71, 85, 105, 0.15);
+    --eca-segment-active-bg: rgba(67, 56, 202, 0.12);
+    --eca-segment-active-text: #3730a3;
+
+    --eca-color-success: #047857;
+    --eca-color-warning: #b45309;
+    --eca-color-danger:  #ef4444;
+
+    --eca-content-gradient: linear-gradient(135deg, #eef2f7 0%, #e8edf5 50%, #dde3ee 100%);
+    --eca-toolbar-bg:    #ffffff;
+}
+
+/* ── IONIC OVERRIDES — use CSS variables ─────────────────── */
+ion-card {
+    border-radius: 12px !important;
+    box-shadow: var(--eca-shadow-card) !important;
+    border: 1px solid var(--eca-border) !important;
+    background: var(--eca-bg-card) !important;
+    backdrop-filter: blur(12px);
+}
+
+ion-content {
+    --background: var(--eca-content-gradient) !important;
+}
+
+ion-toolbar {
+    --background: var(--eca-toolbar-bg) !important;
+    --color: var(--eca-text-primary) !important;
+    --border-color: var(--eca-navbar-border) !important;
+}
+
+/* ── LIGHT MODE: force all page text colors to adapt ────── */
+/* Hardcoded dark hex colors in inline styles can't easily use CSS vars,
+   so we override with targeted selectors on the page containers. */
+
+[data-theme="light"] ion-page,
+[data-theme="light"] ion-content {
+    color: var(--eca-text-primary);
+}
+
+/* Force all inline-styled dark text elements to be readable in light */
+[data-theme="light"] h1,
+[data-theme="light"] h2,
+[data-theme="light"] h3,
+[data-theme="light"] h4,
+[data-theme="light"] h5,
+[data-theme="light"] h6 {
+    color: var(--eca-text-primary) !important;
+}
+
+[data-theme="light"] p,
+[data-theme="light"] span:not([class*="ion-color"]):not(.badge):not([style*="background"]),
+[data-theme="light"] label {
+    color: inherit;
+}
+
+/* IonItem backgrounds in light mode */
+[data-theme="light"] ion-item {
+    --background: var(--eca-bg-item) !important;
+    --color: var(--eca-text-primary) !important;
+    --border-color: var(--eca-border) !important;
+}
+
+/* IonLabel text in light mode */
+[data-theme="light"] ion-label {
+    color: var(--eca-text-primary) !important;
+}
+
+/* ion-input / ion-select in light mode */
+[data-theme="light"] ion-input,
+[data-theme="light"] ion-select,
+[data-theme="light"] ion-textarea {
+    --color: var(--eca-text-primary) !important;
+    --placeholder-color: var(--eca-text-muted) !important;
+}
+
+/* ── native <input>, <select> and <textarea> elements styling ── */
+input,
+select,
+textarea {
+    background-color: var(--eca-bg-input) !important;
+    color: var(--eca-text-primary) !important;
+    border: 1px solid var(--eca-border-input) !important;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--ion-color-primary) !important;
+}
+
+/* IonSegment styling in light */
+[data-theme="light"] ion-segment {
+    --background: var(--eca-segment-bg) !important;
+}
+
+[data-theme="light"] ion-segment-button {
+    --color: #475569 !important;
+    --color-checked: #3730a3 !important;
+    --indicator-color: rgba(67, 56, 202, 0.12) !important;
+}
+
+/* IonToggle in light */
+[data-theme="light"] ion-toggle {
+    --track-background: #cbd5e1;
+    --track-background-checked: #4338ca;
+}
+
+/* IonSearchbar in light */
+[data-theme="light"] ion-searchbar {
+    --background: #ffffff;
+    --color: #0f172a;
+    --placeholder-color: #64748b;
+    --icon-color: #64748b;
+    --border-radius: 10px;
+}
+
+/* IonChip in light mode */
+[data-theme="light"] ion-chip {
+    --background: rgba(67, 56, 202, 0.10);
+    --color: #3730a3;
+}
+
+/* IonButton outline style in light */
+[data-theme="light"] ion-button[fill="outline"] {
+    --color: #334155;
+    --border-color: #94a3b8;
+}
+
+/* Popover / alerts inherit proper background */
+[data-theme="light"] ion-popover,
+[data-theme="light"] ion-alert {
+    --background: #ffffff;
+    --color: #0f172a;
+}
+
+/* ── PREMIUM UTILITY CLASSES ─────────────────────────────── */
+.premium-card {
+    background: var(--eca-bg-card) !important;
+    border: 1px solid var(--eca-border) !important;
+    border-radius: 12px;
+    box-shadow: var(--eca-shadow-card);
+    color: var(--eca-text-primary);
+}
+
+.premium-list-container {
+    background: var(--eca-bg-list) !important;
+    border: 1px solid var(--eca-border-subtle) !important;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.premium-list-item {
+    --background: var(--eca-bg-item) !important;
+    --color: var(--eca-text-secondary) !important;
+    border: 1px solid var(--eca-border-subtle) !important;
+    border-radius: 8px;
+    margin: 6px 0;
+}
+
+.premium-input-item {
+    --background: var(--eca-bg-input) !important;
+    border: 1px solid var(--eca-border-input) !important;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+/* ── BANNER CLASSES ──────────────────────────────────────── */
+.banner-info {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border: 1px solid rgba(59, 130, 246, 0.3) !important;
+    color: #2563eb !important;
+}
+
+:root .banner-info {
+    color: #93c5fd !important;
+}
+
+.banner-success {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    color: #047857 !important;
+}
+
+:root .banner-success {
+    color: #6ee7b7 !important;
+}
+
+.banner-warning {
+    background: rgba(245, 158, 11, 0.1) !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    color: #b45309 !important;
+}
+
+:root .banner-warning {
+    color: #fcd34d !important;
+}
+
+/* ── THEME TOGGLE BUTTON ─────────────────────────────────── */
+.theme-toggle-btn {
+    background: var(--eca-segment-bg);
+    border: 1px solid var(--eca-segment-border);
+    border-radius: 50px;
+    color: var(--eca-text-label);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 12px;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+    white-space: nowrap;
+    letter-spacing: 0.3px;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--eca-segment-active-bg);
+    border-color: #4f46e5;
+    color: var(--eca-segment-active-text);
+    transform: scale(1.03);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.97);
+}
+
+/* ── LOGIN PAGE (force dark variables) ── */
+.login-page {
+    --eca-bg-primary:    #0a0e1a;
+    --eca-bg-secondary:  #0f172a;
+    --eca-bg-card:       rgba(15, 23, 42, 0.65);
+    --eca-bg-item:       rgba(15, 23, 42, 0.25);
+    --eca-bg-input:      #0f172a;
+    --eca-border:        rgba(255, 255, 255, 0.08);
+    --eca-border-subtle: rgba(255, 255, 255, 0.06);
+    --eca-border-input:  rgba(255, 255, 255, 0.10);
+    --eca-text-primary:  #f1f5f9;
+    --eca-text-secondary:#cbd5e1;
+    --eca-text-muted:    #64748b;
+    --eca-text-label:    #94a3b8;
+    --eca-color-success: #6ee7b7;
+    --eca-color-warning: #fcd34d;
+    --eca-color-danger:  #fca5a5;
+
+    color: var(--eca-text-primary) !important;
+}
+
+.login-page h1,
+.login-page h2,
+.login-page h3,
+.login-page h4,
+.login-page h5,
+.login-page h6 {
+    color: inherit !important;
+}
+
+.login-page input {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    color: #e2e8f0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
