@@ -460,13 +460,23 @@ const AppInner: React.FC = () => {
   );
 };
 
+const getBasename = () => {
+  if (window.location.hostname.endsWith('github.io')) {
+    const parts = window.location.pathname.split('/');
+    if (parts[1]) {
+      return `/${parts[1]}`;
+    }
+  }
+  return '';
+};
+
 // ── Root App ──────────────────────────────────────────────────────────────
 const App: React.FC = () => {
   return (
     <ThemeProvider>
       <IonApp>
         <AuthProvider>
-          <IonReactRouter>
+          <IonReactRouter basename={getBasename()}>
             <AppInner />
           </IonReactRouter>
         </AuthProvider>
