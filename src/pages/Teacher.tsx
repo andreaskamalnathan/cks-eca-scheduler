@@ -38,6 +38,18 @@ import { useAuth } from '../context/AuthContext';
 
 const ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
+const emptyPlaceholderStyle: React.CSSProperties = {
+  padding: '24px',
+  textAlign: 'center',
+  color: 'var(--eca-text-muted)',
+  fontSize: '13px',
+  background: 'var(--eca-bg-card)',
+  border: '1px solid var(--eca-border)',
+  borderRadius: '12px',
+  margin: '8px 0',
+  boxSizing: 'border-box'
+};
+
 // ─────────────────────────────────────────────────────────────────────────────
 // SUB-COMPONENT: Form Teacher Class Tab
 // ─────────────────────────────────────────────────────────────────────────────
@@ -189,7 +201,7 @@ const FormTeacherClassTab: React.FC<{ classGrade: string }> = ({ classGrade }) =
             );
           })}
           {students.length === 0 && (
-            <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>
+            <div style={emptyPlaceholderStyle}>
               No students found in Class {classGrade}.
             </div>
           )}
@@ -220,8 +232,8 @@ const FormTeacherClassTab: React.FC<{ classGrade: string }> = ({ classGrade }) =
             </IonItem>
           ))}
           {unregisteredOnDay.length === 0 && (
-            <div style={{ padding: '24px', textAlign: 'center', color: '#10b981', fontSize: '13px', fontWeight: '600' }}>
-              ✅ All students in this class have registered{dayFilter !== 'All' ? ` for ${dayFilter}` : ''}!
+            <div style={{ ...emptyPlaceholderStyle, color: '#10b981', fontWeight: '600' }}>
+              All students in this class have registered{dayFilter !== 'All' ? ` for ${dayFilter}` : ''}!
             </div>
           )}
         </IonList>
@@ -413,7 +425,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
                 </div>
               </IonItem>
             ))}
-            {queuedRegs.length === 0 && <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8', fontSize: '14px' }}>🎉 No students waiting for auditions.</div>}
+            {queuedRegs.length === 0 && <div style={emptyPlaceholderStyle}>No students waiting for auditions.</div>}
           </IonList>
         </div>
       </div>
@@ -423,7 +435,6 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
         {/* Pending Admin */}
         <IonCol size="12" style={{ marginBottom: '28px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px', paddingLeft: '4px' }}>
-            <IonIcon icon={hourglassOutline} style={{ fontSize: '18px', color: '#eab308' }} />
             <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#f59e0b', margin: '0' }}>
               Teacher Approved (Pending Admin Activation) ({pendingAdminRegs.length})
             </h3>
@@ -442,7 +453,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
                   <IonBadge color="warning" slot="end" style={{ borderRadius: '6px' }}>Audition Passed</IonBadge>
                 </IonItem>
               ))}
-              {pendingAdminRegs.length === 0 && <div style={{ padding: '24px', textAlign: 'center', color: '#94a3b8', fontSize: '13px' }}>No students in pending admin state.</div>}
+              {pendingAdminRegs.length === 0 && <div style={emptyPlaceholderStyle}>No students in pending admin state.</div>}
             </IonList>
           </div>
         </IonCol>
@@ -461,7 +472,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
                   <IonBadge color="success" slot="end" style={{ borderRadius: '6px' }}>Active</IonBadge>
                 </IonItem>
               ))}
-              {approvedRegs.length === 0 && <div style={{ padding: '24px', textAlign: 'center', color: '#94a3b8', fontSize: '13px' }}>No approved students yet.</div>}
+              {approvedRegs.length === 0 && <div style={emptyPlaceholderStyle}>No approved students yet.</div>}
             </IonList>
           </div>
         </IonCol>
@@ -480,7 +491,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
                   <IonBadge color="danger" slot="end" style={{ borderRadius: '6px' }}>Rejected</IonBadge>
                 </IonItem>
               ))}
-              {rejectedRegs.length === 0 && <div style={{ padding: '24px', textAlign: 'center', color: '#94a3b8', fontSize: '13px' }}>No rejected students.</div>}
+              {rejectedRegs.length === 0 && <div style={emptyPlaceholderStyle}>No rejected students.</div>}
             </IonList>
           </div>
         </IonCol>
@@ -632,7 +643,7 @@ const Teacher: React.FC = () => {
               {/* Class Tab header even without segment */}
               {isForm && !showBothTabs && (
                 <div className="banner-info" style={{ marginBottom: '16px', padding: '6px 10px', borderRadius: '8px', display: 'inline-block', fontSize: '12px', fontWeight: '700' }}>
-                  📋 Form Teacher View
+                  Form Teacher View
                 </div>
               )}
 

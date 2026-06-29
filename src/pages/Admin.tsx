@@ -25,6 +25,18 @@ import {
 } from '../services/supabase';
 
 const ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+const emptyPlaceholderStyle: React.CSSProperties = {
+  padding: '24px',
+  textAlign: 'center',
+  color: 'var(--eca-text-muted)',
+  fontSize: '13px',
+  background: 'var(--eca-bg-card)',
+  border: '1px solid var(--eca-border)',
+  borderRadius: '12px',
+  margin: '8px 0',
+  boxSizing: 'border-box'
+};
 const CLASS_GRADES = [
   '7A', '7B', '7C',
   '8A', '8B', '8C',
@@ -854,7 +866,7 @@ const Admin: React.FC = () => {
                         </IonItem>
                       ))}
                       {teachers.length === 0 && (
-                        <div style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>No teachers yet. Add one above.</div>
+                        <div style={emptyPlaceholderStyle}>No teachers yet. Add one above.</div>
                       )}
                     </IonList>
                   </div>
@@ -931,7 +943,7 @@ const Admin: React.FC = () => {
                             </IonItem>
                           ))}
                           {getFilteredStudents().length === 0 && (
-                            <div style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>No students found matching filters.</div>
+                            <div style={emptyPlaceholderStyle}>No students found matching filters.</div>
                           )}
                         </IonList>
                       </div>
@@ -1169,7 +1181,7 @@ const Admin: React.FC = () => {
                         );
                       })}
                       {getFilteredRegistrations().length === 0 && (
-                        <div style={{ padding: '48px', textAlign: 'center', color: '#94a3b8' }}>No registrations match current filters.</div>
+                        <div style={emptyPlaceholderStyle}>No registrations match current filters.</div>
                       )}
                     </IonList>
                   </div>
