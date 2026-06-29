@@ -192,8 +192,8 @@ const RoleAwareNavbar: React.FC = () => {
     const isActive = location.pathname === path;
     return {
       background: isActive ? activeColor : 'transparent',
-      color: isActive ? '#ffffff' : '#94a3b8',
-      border: isActive ? 'none' : '1px solid #334155',
+      color: isActive ? '#ffffff' : (isDark ? '#94a3b8' : '#475569'),
+      border: isActive ? 'none' : (isDark ? '1px solid #334155' : '1px solid #cbd5e1'),
       padding: '7px 14px',
       borderRadius: '20px',
       fontSize: '12px',
@@ -211,9 +211,9 @@ const RoleAwareNavbar: React.FC = () => {
       display: 'flex',
       alignItems: 'center',
       width: '100%',
-      background: isActive ? activeColor : 'rgba(255, 255, 255, 0.03)',
-      color: isActive ? '#ffffff' : '#cbd5e1',
-      border: isActive ? 'none' : '1px solid #334155',
+      background: isActive ? activeColor : (isDark ? 'rgba(255, 255, 255, 0.03)' : '#f1f5f9'),
+      color: isActive ? '#ffffff' : (isDark ? '#cbd5e1' : '#475569'),
+      border: isActive ? 'none' : (isDark ? '1px solid #334155' : '1px solid #cbd5e1'),
       padding: '12px 16px',
       borderRadius: '8px',
       fontSize: '14px',

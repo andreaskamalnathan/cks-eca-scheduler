@@ -75,7 +75,7 @@ const Home: React.FC = () => {
       unsubActs();
       unsubRegs();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Keep selectedStudentId in sync with auth for students
@@ -131,7 +131,7 @@ const Home: React.FC = () => {
     setFeedbackType('info');
 
     const result = await registerECA(selectedStudentId, activityId, day, false);
-    
+
     setFeedbackMessage(result.message);
     setFeedbackType(result.success ? 'success' : 'error');
 
@@ -174,7 +174,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader collapse="fade">
-        <IonToolbar color="primary">
+        <IonToolbar color="success">
           <IonTitle style={{ fontWeight: '800', letterSpacing: '-0.5px' }}>
             {isAdmin ? 'Student ECA Portal' : 'My ECA Portal'}
           </IonTitle>
@@ -201,7 +201,7 @@ const Home: React.FC = () => {
                         )}
                       </div>
                     </div>
-                    <IonIcon icon={personOutline} style={{ fontSize: '32px', color: 'var(--ion-color-primary)' }} />
+                    <IonIcon icon={personOutline} style={{ fontSize: '32px', color: 'var(--ion-color-success)' }} />
                   </div>
 
                   {/* Admin-only: Student selector */}
@@ -212,7 +212,7 @@ const Home: React.FC = () => {
                         value={selectedStudentId}
                         interface="popover"
                         onIonChange={e => handleStudentChange(e.detail.value)}
-                        style={{ fontWeight: '600', color: 'var(--ion-color-primary)' }}
+                        style={{ fontWeight: '600', color: 'var(--ion-color-success)' }}
                       >
                         {students.map(st => (
                           <IonSelectOption key={st.id} value={st.id}>{st.name} ({st.group_tier})</IonSelectOption>
@@ -236,8 +236,8 @@ const Home: React.FC = () => {
                 <span>
                   <strong>Schedule Rule:</strong>{' '}
                   {currentStudent?.group_tier === 'SMP'
-                    ? `SMP students must register activities on: ${allowedDays.join(' and ')}.`
-                    : `SMA students must register activities on: ${allowedDays.join(' and ')}.`}
+                    ? `SMP students must register different activities on: ${allowedDays.join(' and ')}.`
+                    : `SMA students must register different activities on: ${allowedDays.join(' and ')}.`}
                 </span>
               </div>
 
@@ -260,7 +260,7 @@ const Home: React.FC = () => {
                     );
                   })}
                   {studentRegistrations.length === 0 && (
-                    <div style={{ padding: '24px', textAlign: 'center', color: 'var(--eca-text-muted)', fontSize: '14px' }}>No current registrations. Select your activities below!</div>
+                    <div style={{ padding: '24px', textAlign: 'center', color: 'var(--eca-color-danger)', fontSize: '14px' }}>No current registrations. Select your activities below!</div>
                   )}
                 </IonList>
               </div>
@@ -305,8 +305,8 @@ const Home: React.FC = () => {
                   .map(r => r.activity_id);
 
                 // Filter by day, status, and group eligibility levels (SMP/SMA/both)
-                const openActivities = activities.filter(act => 
-                  act.is_open === true && 
+                const openActivities = activities.filter(act =>
+                  act.is_open === true &&
                   (act.operational_days || []).includes(day) &&
                   !activeOrQueuedActivityIds.includes(act.id) &&
                   (!act.group_eligibility || act.group_eligibility === 'both' || act.group_eligibility === currentStudent?.group_tier)
@@ -386,7 +386,7 @@ const Home: React.FC = () => {
               {/* Feedback Message */}
               {feedbackMessage && (
                 <div className={feedbackType === 'error' ? 'banner-warning' : feedbackType === 'success' ? 'banner-success' : 'banner-info'}
-                  style={{ marginTop: '8px', marginBottom: '24px', padding: '16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', borderLeft: `4px solid ${feedbackType === 'error' ? '#ef4444' : feedbackType === 'success' ? '#22c55e' : '#f59e0b'}` }}>
+                  style={{ marginTop: '8px', marginBottom: '24px', padding: '16px', borderRadius: '8px', fontSize: '14px', fontWeight: '600', borderLeft: `4px solid ${feedbackType === 'error' ? '#ef4444' : feedbackType === 'success' ? '#22c52dff' : '#f59e0b'}` }}>
                   {feedbackMessage}
                 </div>
               )}

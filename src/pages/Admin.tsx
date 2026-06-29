@@ -389,7 +389,7 @@ const Admin: React.FC = () => {
       return <IonBadge color="secondary" style={{ borderRadius: '4px', marginLeft: '6px' }}>SMP Only</IonBadge>;
     }
     if (eligibility === 'SMA') {
-      return <IonBadge color="tertiary" style={{ borderRadius: '4px', marginLeft: '6px' }}>SMA Only</IonBadge>;
+      return <IonBadge color="danger" style={{ borderRadius: '4px', marginLeft: '6px' }}>SMA Only</IonBadge>;
     }
     return <IonBadge color="medium" style={{ borderRadius: '4px', marginLeft: '6px' }}>SMP & SMA</IonBadge>;
   };
@@ -643,8 +643,8 @@ const Admin: React.FC = () => {
               <IonSegment scrollable value={activeTab} onIonChange={e => handleTabChange(e.detail.value as any)} mode="md"
                 style={{
                   marginBottom: '24px',
-                  background: 'rgba(15, 23, 42, 0.65)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  background: 'var(--eca-segment-bg)',
+                  border: '1px solid var(--eca-segment-border)',
                   borderRadius: '10px',
                   padding: '2px',
                   '--color': '#94a3b8',
@@ -714,33 +714,33 @@ const Admin: React.FC = () => {
                               {act.is_open ? 'Open' : 'Closed'}
                             </IonBadge>
                           </div>
-                          <div style={{ fontSize: '13px', color: '#cbd5e1', lineHeight: '1.8' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '4px', marginBottom: '4px' }}>
+                          <div style={{ fontSize: '13px', color: 'var(--eca-text-secondary)', lineHeight: '1.8' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--eca-border-subtle)', paddingBottom: '4px', marginBottom: '4px' }}>
                               <span>Teacher:</span>
-                              <strong style={{ color: '#f1f5f9' }}>{act.teacher_name || '—'}</strong>
+                              <strong style={{ color: 'var(--eca-text-primary)' }}>{act.teacher_name || '—'}</strong>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255, 255, 255, 0.06)', paddingBottom: '4px', marginBottom: '4px' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--eca-border-subtle)', paddingBottom: '4px', marginBottom: '4px' }}>
                               <span>Max Seats:</span>
-                              <strong style={{ color: '#f1f5f9' }}>{act.max_capacity}</strong>
+                              <strong style={{ color: 'var(--eca-text-primary)' }}>{act.max_capacity}</strong>
                             </div>
                             <div style={{ marginBottom: '6px' }}>
                               <span>Days: </span>
                               {(act.operational_days || []).map((d: string) => (
-                                <span key={d} style={{ display: 'inline-block', background: 'rgba(99, 102, 241, 0.2)', color: '#a5b4fc', borderRadius: '4px', padding: '1px 6px', fontSize: '11px', fontWeight: '700', marginRight: '4px' }}>{d}</span>
+                                <span key={d} className="activity-day-badge" style={{ display: 'inline-block', borderRadius: '4px', padding: '1px 6px', fontSize: '11px', fontWeight: '700', marginRight: '4px' }}>{d}</span>
                               ))}
                             </div>
                             {/* Seat counts per day */}
-                            <div style={{ background: 'rgba(15, 23, 42, 0.45)', border: '1px solid rgba(255, 255, 255, 0.06)', borderRadius: '6px', padding: '8px', marginTop: '8px' }}>
-                              <div style={{ fontSize: '11px', fontWeight: '700', color: '#94a3b8', marginBottom: '4px' }}>SEAT STATUS</div>
+                            <div className="activity-seat-status-box" style={{ borderRadius: '6px', padding: '8px', marginTop: '8px' }}>
+                              <div className="seat-status-header" style={{ fontSize: '11px', fontWeight: '700', marginBottom: '4px' }}>SEAT STATUS</div>
                               {(act.operational_days || []).map((d: string) => {
                                 const filled = seatCounts[`${act.id}_${d}`] || 0;
                                 const avail = Math.max(0, act.max_capacity - filled);
                                 return (
                                   <div key={d} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '2px' }}>
-                                    <span style={{ color: '#94a3b8' }}>{d}:</span>
+                                    <span className="seat-row-label">{d}:</span>
                                     <span>
-                                      <strong style={{ color: avail === 0 ? '#ef4444' : '#f1f5f9' }}>{avail} available</strong>
-                                      <span style={{ color: '#94a3b8' }}> ({filled}/{act.max_capacity})</span>
+                                      <strong className={avail === 0 ? 'seat-row-count-full' : 'seat-row-count'}>{avail} available</strong>
+                                      <span className="seat-row-fraction"> ({filled}/{act.max_capacity})</span>
                                     </span>
                                   </div>
                                 );
@@ -809,16 +809,16 @@ const Admin: React.FC = () => {
                         <IonItem key={t.id} className="premium-list-item" style={{ '--padding-top': '12px', '--padding-bottom': '12px' }}>
                           <IonLabel style={{ margin: 0 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '2px' }}>
-                              <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#f1f5f9', margin: 0 }}>{t.name}</h3>
+                              <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--eca-text-primary)', margin: 0 }}>{t.name}</h3>
                               {t.class_assignment && (
-                                <IonBadge color="tertiary" style={{ borderRadius: '5px', fontSize: '10px' }}>Form Teacher · Class {t.class_assignment}</IonBadge>
+                                <IonBadge color="danger" style={{ borderRadius: '5px', fontSize: '10px' }}>Form Teacher · Class {t.class_assignment}</IonBadge>
                               )}
                             </div>
-                            <p style={{ color: '#cbd5e1', fontSize: '13px', margin: '2px 0 0' }}>
+                            <p style={{ color: 'var(--eca-text-secondary)', fontSize: '13px', margin: '2px 0 0' }}>
                               Specialty: <strong>{t.subject_specialty || '—'}</strong>
-                              {t.employee_id && <> · Employee ID: <strong style={{ color: '#6366f1' }}>{t.employee_id}</strong></>}
+                              {t.employee_id && <> · Employee ID: <strong style={{ color: '#f16363ff' }}>{t.employee_id}</strong></>}
                             </p>
-                            <p style={{ color: '#94a3b8', fontSize: '12px', margin: '2px 0 0' }}>
+                            <p style={{ color: 'var(--eca-text-muted)', fontSize: '12px', margin: '2px 0 0' }}>
                               Activities: {activities.filter(a => a.teacher_name === t.name).map(a => a.name).join(', ') || '—'}
                             </p>
                             {isMobile && (
@@ -914,7 +914,7 @@ const Admin: React.FC = () => {
                                   {s.name}
                                 </h3>
                                 <p style={{ fontSize: '12px', color: 'var(--eca-text-secondary)', margin: 0 }}>
-                                  ID: <strong>{s.student_number}</strong> · Tier: <strong>{s.group_tier}</strong> · Class: <strong style={{ color: 'var(--ion-color-primary)' }}>{s.class_grade || 'None'}</strong>
+                                  ID: <strong>{s.student_number}</strong> · Tier: <strong>{s.group_tier}</strong> · Class: <strong style={{ color: '#f16363ff' }}>{s.class_grade || 'None'}</strong>
                                 </p>
                                 <p style={{ fontSize: '11px', color: 'var(--eca-text-muted)', margin: '2px 0 0' }}>
                                   Active: {registrations.filter(r => r.student_id === s.id && r.status === 'Approved').map(r => `${r.activity_name} (${r.day_of_week})`).join(', ') || 'None'}
@@ -1057,7 +1057,7 @@ const Admin: React.FC = () => {
                                 {renderBadge(reg)}
                               </div>
                               <p style={{ color: 'var(--eca-text-secondary)', fontSize: '13px', margin: '2px 0' }}>
-                                Tier: <strong>{reg.student_group}</strong> · Activity: <strong style={{ color: 'var(--ion-color-primary-tint)' }}>{reg.activity_name}</strong>
+                                Tier: <strong>{reg.student_group}</strong> · Activity: <strong style={{ color: '#f16363ff' }}>{reg.activity_name}</strong>
                               </p>
                               <p style={{ color: 'var(--eca-text-muted)', fontSize: '12px', margin: 0 }}>
                                 Day: <strong>{reg.day_of_week}</strong>
@@ -1212,7 +1212,7 @@ const Admin: React.FC = () => {
                       <IonCard className="premium-card">
                         <IonCardContent style={{ padding: '24px' }}>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
-                            <span style={{ padding: '4px 12px', background: 'rgba(236, 72, 153, 0.15)', color: '#fbcfe8', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>SMA Group</span>
+                            <span style={{ padding: '4px 12px', background: 'rgba(236, 72, 153, 0.15)', color: '#cb0256ff', borderRadius: '20px', fontSize: '13px', fontWeight: '700' }}>SMA Group</span>
                             <span style={{ fontSize: '13px', color: 'var(--eca-text-muted)' }}>Senior High School</span>
                           </div>
                           <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--eca-text-secondary)', marginBottom: '12px' }}>ALLOWED ACTIVITY DAYS:</div>

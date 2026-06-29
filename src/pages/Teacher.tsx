@@ -85,18 +85,18 @@ const FormTeacherClassTab: React.FC<{ classGrade: string }> = ({ classGrade }) =
     dayFilter === 'All'
       ? unregistered
       : students.filter(s => {
-          const smpDays = (settings['smp_days'] || 'Monday,Thursday').split(',').map((d: string) => d.trim()).filter(Boolean);
-          const smaDays = (settings['sma_days'] || 'Tuesday,Thursday').split(',').map((d: string) => d.trim()).filter(Boolean);
-          const studentAllowedDays = s.group_tier === 'SMP' ? smpDays : smaDays;
-          if (!studentAllowedDays.includes(dayFilter)) {
-            // Student is not scheduled for this day, so they are not unregistered
-            return false;
-          }
-          const studentRegs = regsByStudent[s.id] || [];
-          return !studentRegs.some(
-            r => r.day_of_week === dayFilter && (r.status === 'Approved' || r.status === 'Queued')
-          );
-        });
+        const smpDays = (settings['smp_days'] || 'Monday,Thursday').split(',').map((d: string) => d.trim()).filter(Boolean);
+        const smaDays = (settings['sma_days'] || 'Tuesday,Thursday').split(',').map((d: string) => d.trim()).filter(Boolean);
+        const studentAllowedDays = s.group_tier === 'SMP' ? smpDays : smaDays;
+        if (!studentAllowedDays.includes(dayFilter)) {
+          // Student is not scheduled for this day, so they are not unregistered
+          return false;
+        }
+        const studentRegs = regsByStudent[s.id] || [];
+        return !studentRegs.some(
+          r => r.day_of_week === dayFilter && (r.status === 'Approved' || r.status === 'Queued')
+        );
+      });
 
   const badgeForStatus = (status: string, teacherApproved: boolean) => {
     if (status === 'Approved') return <IonBadge color="success" style={{ borderRadius: '5px', fontSize: '10px' }}>Active</IonBadge>;
@@ -281,10 +281,10 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
     return result;
   };
 
-  const queuedRegs      = processRosterList(filteredRegs.filter(r => r.status === 'Queued' && !r.teacher_approved));
+  const queuedRegs = processRosterList(filteredRegs.filter(r => r.status === 'Queued' && !r.teacher_approved));
   const pendingAdminRegs = processRosterList(filteredRegs.filter(r => r.status === 'Queued' && r.teacher_approved));
-  const approvedRegs    = processRosterList(filteredRegs.filter(r => r.status === 'Approved'));
-  const rejectedRegs    = processRosterList(filteredRegs.filter(r => r.status === 'Rejected'));
+  const approvedRegs = processRosterList(filteredRegs.filter(r => r.status === 'Approved'));
+  const rejectedRegs = processRosterList(filteredRegs.filter(r => r.status === 'Rejected'));
 
   const dayPillStyle = (count: number, max: number): React.CSSProperties => {
     const pct = max > 0 ? count / max : 0;
@@ -301,7 +301,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
         <IonCard className="premium-card" style={{ margin: '0 0 24px 0' }}>
           <IonCardContent style={{ padding: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-              <IonIcon icon={schoolOutline} style={{ fontSize: '28px', color: 'var(--ion-color-tertiary)' }} />
+              <IonIcon icon={schoolOutline} style={{ fontSize: '28px', color: 'var(--ion-color-primary)' }} />
               <div>
                 <h4 style={{ color: 'var(--eca-text-secondary)', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', margin: '0' }}>Active Instructor Profile</h4>
                 <h2 style={{ fontSize: '20px', fontWeight: '700', color: 'var(--eca-text-primary)', margin: '2px 0 0' }}>{selectedTeacherName || 'No Teacher Selected'}</h2>
@@ -309,7 +309,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
             </div>
             <IonItem lines="none" style={{ '--background': 'var(--eca-bg-list)', borderRadius: '8px', border: '1px solid var(--eca-border)', marginTop: '8px' }}>
               <IonLabel style={{ fontSize: '14px', fontWeight: '600', color: 'var(--eca-text-label)' }}>Select Instructor:</IonLabel>
-              <IonSelect value={selectedTeacherName} interface="popover" onIonChange={e => onTeacherChange(e.detail.value)} style={{ fontWeight: '600', color: 'var(--ion-color-tertiary)' }}>
+              <IonSelect value={selectedTeacherName} interface="popover" onIonChange={e => onTeacherChange(e.detail.value)} style={{ fontWeight: '600', color: 'var(--ion-color-primary)' }}>
                 {teachers.map(t => <IonSelectOption key={t.id} value={t.name}>{t.name}</IonSelectOption>)}
               </IonSelect>
             </IonItem>
@@ -330,7 +330,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
 
       {/* Assigned Activities */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 12px 4px' }}>
-        <IonIcon icon={peopleOutline} style={{ fontSize: '18px', color: 'var(--ion-color-tertiary)' }} />
+        <IonIcon icon={peopleOutline} style={{ fontSize: '18px', color: 'var(--ion-color-primary)' }} />
         <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--eca-text-primary)', margin: '0' }}>Your Assigned Activities</h3>
       </div>
       <IonRow style={{ marginBottom: '24px' }}>
@@ -399,7 +399,7 @@ const ActivityEvaluationTab: React.FC<ActivityTabProps> = ({
                     <span style={{ fontSize: '12px', padding: '2px 8px', background: 'var(--eca-segment-bg)', color: 'var(--eca-text-secondary)', borderRadius: '10px', fontWeight: '700', marginLeft: '6px' }}>Class {reg.student_class_grade || 'TBA'}</span>
                   </div>
                   <div style={{ fontSize: '12px', color: 'var(--eca-text-secondary)', marginTop: '2px' }}>
-                    Grade/Tier: <strong style={{ color: '#4f46e5' }}>{reg.student_group}</strong>{' | '}Activity: <strong>{reg.activity_name}</strong>
+                    Grade/Tier: <strong style={{ color: 'var(--ion-color-primary)' }}>{reg.student_group}</strong>{' | '}Activity: <strong>{reg.activity_name}</strong>
                   </div>
                   <div style={{ fontSize: '12px', color: 'var(--eca-text-secondary)', marginTop: '2px' }}>Day: <strong style={{ color: '#0d9488' }}>{reg.day_of_week}</strong></div>
                 </IonLabel>
@@ -546,7 +546,7 @@ const Teacher: React.FC = () => {
       getActivitySeatCounts().then(setSeatCounts).catch(console.error);
     });
     return () => { unsubTeachers(); unsubActs(); unsubRegs(); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Dynamically update activeTab when selectedTeacher, activities, or teachers list changes
@@ -564,7 +564,7 @@ const Teacher: React.FC = () => {
     } else {
       setActiveTab('activities');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTeacher, activities, teachers, formTeacherClass]);
 
   const handleTeacherChange = (name: string) => {
@@ -597,7 +597,7 @@ const Teacher: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar color="tertiary">
+        <IonToolbar color="primary">
           <IonTitle style={{ fontWeight: '700', letterSpacing: '-0.5px' }}>
             {isAdmin ? 'Teacher Portal' : isForm && !hasActivities ? 'Form Teacher Portal' : 'Teacher Evaluation Desk'}
           </IonTitle>
@@ -619,7 +619,7 @@ const Teacher: React.FC = () => {
               {/* Tab Switcher (only when both tabs exist) */}
               {showBothTabs && (
                 <IonSegment value={activeTab} onIonChange={e => setActiveTab(e.detail.value as any)} mode="md"
-                  style={{ marginBottom: '24px', background: 'rgba(15,23,42,0.45)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', padding: '2px' }}>
+                  style={{ marginBottom: '24px', background: 'var(--eca-segment-bg)', border: '1px solid var(--eca-segment-border)', borderRadius: '8px', padding: '2px' }}>
                   <IonSegmentButton value="class" style={{ '--color-checked': '#7c3aed', fontWeight: '700' }}>
                     <IonLabel><IonIcon icon={schoolOutline} /> My Class</IonLabel>
                   </IonSegmentButton>
