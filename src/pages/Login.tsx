@@ -8,10 +8,14 @@ import { useHistory } from 'react-router-dom';
 import { IonPage, IonContent } from '@ionic/react';
 import { loginUser, changePassword } from '../services/auth';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import ckLogo from '../assets/ck_logo.png';
+import akLogo from '../assets/ak_logo.png';
 
 const Login: React.FC = () => {
   const history = useHistory();
   const { login, patchSession, currentUser } = useAuth();
+  const { isDark } = useTheme();
 
   // Login form state
   const [username, setUsername] = useState('');
@@ -154,13 +158,21 @@ const Login: React.FC = () => {
             {/* Logo & Branding */}
             <div style={{ textAlign: 'center', marginBottom: '36px' }}>
               <div style={{
-                width: '64px', height: '64px', borderRadius: '16px',
-                background: 'linear-gradient(135deg, #3b82f6, #7c3aed)',
+                width: '84px', height: '84px',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: '28px', margin: '0 auto 16px',
-                boxShadow: '0 8px 24px rgba(59,130,246,0.35)',
+                margin: '0 auto 16px',
+                background: '#ffffff',
+                border: '3px solid #ffffff',
+                borderRadius: '16px',
+                padding: '6px',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.3)',
+                boxSizing: 'border-box',
               }}>
-                🏫
+                <img
+                  src={ckLogo}
+                  alt="CK Logo"
+                  style={{ height: '100%', width: '100%', objectFit: 'contain' }}
+                />
               </div>
               <h1 style={{
                 background: 'linear-gradient(90deg, #60a5fa, #a78bfa)',
@@ -309,7 +321,6 @@ const Login: React.FC = () => {
                     {[
                       { role: '🎓 Student', hint: 'Username & password = NIS number' },
                       { role: '👩‍🏫 Teacher', hint: 'Username & password = Employee ID' },
-                      { role: '🛡️ Admin', hint: 'Username: admin  |  Password: admin' },
                     ].map(item => (
                       <div key={item.role} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px' }}>
                         <span style={{ color: '#94a3b8', minWidth: '90px', fontWeight: '600' }}>{item.role}</span>
@@ -323,9 +334,15 @@ const Login: React.FC = () => {
           </div>
 
           {/* Footer */}
-          <p style={{ color: '#1e293b', fontSize: '12px', marginTop: '24px', textAlign: 'center' }}>
-            ECA Scheduler · School Extracurricular Management
-          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginTop: '24px', width: '100%' }}>
+            <p style={{ color: '#64748b', fontSize: '12px', margin: 0, textAlign: 'center' }}>
+              ECA Scheduler · School Extracurricular Management
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', fontSize: '11px', color: '#64748b', fontWeight: '700' }}>
+              <span>developed by</span>
+              <img src={akLogo} alt="AK Logo" style={{ height: '65px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)' }} />
+            </div>
+          </div>
         </div>
 
         <style>{`

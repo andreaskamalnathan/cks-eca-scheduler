@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Teacher from './pages/Teacher';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
+import ckLogo from './assets/ck_logo.png';
+import akLogo from './assets/ak_logo.png';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { changePassword } from './services/auth';
@@ -229,10 +231,10 @@ const RoleAwareNavbar: React.FC = () => {
 
   // Role badge colors — distinguish form vs subject teacher
   const roleBadge: Record<string, { bg: string; color: string; label: string }> = {
-    admin:          { bg: '#fef2f2', color: '#e11d48', label: 'Admin' },
-    student:        { bg: '#eff6ff', color: '#2563eb', label: 'Student' },
-    teacher:        { bg: '#f5f3ff', color: '#7c3aed', label: 'Teacher' },
-    form_teacher:   { bg: '#fdf4ff', color: '#9333ea', label: 'Form Teacher' },
+    admin: { bg: '#fef2f2', color: '#e11d48', label: 'Admin' },
+    student: { bg: '#eff6ff', color: '#2563eb', label: 'Student' },
+    teacher: { bg: '#f5f3ff', color: '#7c3aed', label: 'Teacher' },
+    form_teacher: { bg: '#fdf4ff', color: '#9333ea', label: 'Form Teacher' },
   };
   const badgeKey = isTeacher && isForm ? 'form_teacher' : currentUser.role;
   const badge = roleBadge[badgeKey] || roleBadge.admin;
@@ -257,7 +259,7 @@ const RoleAwareNavbar: React.FC = () => {
     top: 0,
     right: 0,
     width: '280px',
-    height: '100vh',
+    height: '100%',
     background: 'var(--eca-drawer-bg)',
     borderLeft: '1px solid var(--eca-drawer-border)',
     boxShadow: isDark ? '-4px 0 20px rgba(0, 0, 0, 0.4)' : '-4px 0 16px rgba(0,0,0,0.12)',
@@ -267,7 +269,10 @@ const RoleAwareNavbar: React.FC = () => {
     display: 'flex',
     flexDirection: 'column',
     padding: '24px',
+    paddingTop: 'calc(24px + var(--ion-safe-area-top, 0px))',
+    paddingBottom: 'calc(24px + var(--ion-safe-area-bottom, 0px))',
     boxSizing: 'border-box',
+    overflowY: 'auto',
   };
 
   return (
@@ -290,13 +295,21 @@ const RoleAwareNavbar: React.FC = () => {
           <div style={{
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             background: 'var(--eca-navbar-bg)', padding: '12px 18px',
+            paddingTop: 'calc(12px + var(--ion-safe-area-top, 0px))',
             color: 'var(--eca-text-primary)', boxShadow: 'var(--eca-shadow-navbar)',
             borderBottom: '1px solid var(--eca-navbar-border)',
-            zIndex: 9999, position: 'relative', height: '56px', boxSizing: 'border-box'
+            zIndex: 9999, position: 'relative', height: 'calc(56px + var(--ion-safe-area-top, 0px))', boxSizing: 'border-box'
           }}>
-            <div style={{ fontWeight: '800', fontSize: '14px', letterSpacing: '-0.3px', color: '#38bdf8', cursor: 'pointer' }}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800', fontSize: '14px', letterSpacing: '-0.3px', color: '#38bdf8', cursor: 'pointer' }}
               onClick={() => isAdmin ? history.push('/admin') : isStudent ? history.push('/home') : history.push('/teacher')}>
-              🏫 ECA SCHEDULER
+              <div style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: '#ffffff', borderRadius: '6px', padding: '2px',
+                height: '32px', width: '32px', boxSizing: 'border-box', flexShrink: 0
+              }}>
+                <img src={ckLogo} alt="CK Logo" style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
+              </div>
+              ECA SCHEDULER
             </div>
             <button onClick={() => setMenuOpen(true)} style={{ background: 'none', border: 'none', color: 'var(--eca-navbar-text)', padding: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
               <IonIcon icon={menuOutline} style={{ fontSize: '28px' }} />
@@ -309,7 +322,7 @@ const RoleAwareNavbar: React.FC = () => {
           {/* Mobile Drawer */}
           <div style={drawerStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8', letterSpacing: '0.5px' }}>🏫 MENU</span>
+              <span style={{ fontWeight: '800', fontSize: '13px', color: '#38bdf8', letterSpacing: '0.5px' }}>MENU</span>
               <button onClick={() => setMenuOpen(false)} style={{ background: 'none', border: 'none', color: 'var(--eca-text-muted)', padding: '4px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
                 <IonIcon icon={closeOutline} style={{ fontSize: '28px' }} />
               </button>
@@ -377,9 +390,16 @@ const RoleAwareNavbar: React.FC = () => {
           zIndex: 9999, position: 'relative', gap: '12px', flexWrap: 'wrap',
         }}>
           {/* Brand */}
-          <div style={{ fontWeight: '800', fontSize: '14px', letterSpacing: '-0.3px', color: '#38bdf8', cursor: 'pointer', flexShrink: 0 }}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800', fontSize: '14px', letterSpacing: '-0.3px', color: '#38bdf8', cursor: 'pointer', flexShrink: 0 }}
             onClick={() => isAdmin ? history.push('/admin') : isStudent ? history.push('/home') : history.push('/teacher')}>
-            🏫 ECA SCHEDULER
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: '#ffffff', borderRadius: '6px', padding: '2px',
+              height: '32px', width: '32px', boxSizing: 'border-box', flexShrink: 0
+            }}>
+              <img src={ckLogo} alt="CK Logo" style={{ height: '100%', width: '100%', objectFit: 'contain' }} />
+            </div>
+            ECA
           </div>
 
           {/* Navigation buttons — strictly role-based */}
@@ -432,6 +452,8 @@ const RoleAwareNavbar: React.FC = () => {
 // ── App (inner, inside router) ────────────────────────────────────────────
 const AppInner: React.FC = () => {
   const { currentUser } = useAuth();
+  const location = useLocation();
+  const { isDark } = useTheme();
 
   // Default redirect based on role
   const getDefaultPath = () => {
@@ -441,22 +463,37 @@ const AppInner: React.FC = () => {
     return '/admin';
   };
 
+  const isLoginPage = !currentUser || location.pathname === '/login';
+
   return (
-    <>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', width: '100vw', overflow: 'hidden' }}>
       <RoleAwareNavbar />
-      <IonRouterOutlet>
-        <Route exact path="/login" component={Login} />
-        {/* Students + admin can view the student portal */}
-        <ProtectedRoute exact path="/home" component={Home} allowedRoles={['student', 'admin']} />
-        {/* All teachers (subject + form) + admin can view the teacher portal */}
-        <ProtectedRoute exact path="/teacher" component={Teacher} allowedRoles={['teacher', 'admin']} />
-        {/* Only admin can view the admin center */}
-        <ProtectedRoute exact path="/admin" component={Admin} allowedRoles={['admin']} />
-        <Route exact path="/">
-          <Redirect to={getDefaultPath()} />
-        </Route>
-      </IonRouterOutlet>
-    </>
+      <div style={{ flex: 1, position: 'relative' }}>
+        <IonRouterOutlet>
+          <Route exact path="/login" component={Login} />
+          {/* Students + admin can view the student portal */}
+          <ProtectedRoute exact path="/home" component={Home} allowedRoles={['student', 'admin']} />
+          {/* All teachers (subject + form) + admin can view the teacher portal */}
+          <ProtectedRoute exact path="/teacher" component={Teacher} allowedRoles={['teacher', 'admin']} />
+          {/* Only admin can view the admin center */}
+          <ProtectedRoute exact path="/admin" component={Admin} allowedRoles={['admin']} />
+          <Route exact path="/">
+            <Redirect to={getDefaultPath()} />
+          </Route>
+        </IonRouterOutlet>
+      </div>
+      {!isLoginPage && (
+        <div style={{
+          display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: '4px',
+          padding: '6px 12px', background: 'var(--eca-navbar-bg)',
+          borderTop: '1px solid var(--eca-navbar-border)',
+          color: 'var(--eca-text-muted)', fontSize: '11px', fontWeight: '700',
+          zIndex: 9999, boxSizing: 'border-box'
+        }}>
+          developed by <img src={akLogo} alt="AK" style={{ height: '34px', width: 'auto', objectFit: 'contain', filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />
+        </div>
+      )}
+    </div>
   );
 };
 

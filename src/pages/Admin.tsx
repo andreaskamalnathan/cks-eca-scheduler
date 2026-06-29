@@ -10,7 +10,8 @@ import {
   settingsOutline, peopleOutline, serverOutline, trashOutline,
   pencilOutline, checkmarkCircleOutline, addCircleOutline, refreshOutline,
   personAddOutline, calendarOutline, starOutline, personOutline,
-  alertCircleOutline, funnelOutline
+  alertCircleOutline, funnelOutline, keyOutline, swapHorizontalOutline,
+  closeCircleOutline
 } from 'ionicons/icons';
 import {
   subscribeActivities, subscribeRegistrations, subscribeStudents, subscribeTeachers,
@@ -25,11 +26,11 @@ import {
 
 const ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const CLASS_GRADES = [
-  '7A', '7B', '7C', 
-  '8A', '8B', '8C', 
-  '9A', '9B', '9C', 
-  '10A', '10B', '10C', 
-  '11A', '11B', '11C', 
+  '7A', '7B', '7C',
+  '8A', '8B', '8C',
+  '9A', '9B', '9C',
+  '10A', '10B', '10C',
+  '11A', '11B', '11C',
   '12A', '12B', '12C'
 ];
 
@@ -94,6 +95,15 @@ const Admin: React.FC = () => {
   const [movingRegId, setMovingRegId] = useState<string | null>(null);
   const [moveActivityId, setMoveActivityId] = useState('');
   const [moveDay, setMoveDay] = useState('');
+
+  // ── Responsive state ──
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // ── Settings state ──
   const [smpDaysEdit, setSmpDaysEdit] = useState<string[]>([]);
@@ -440,7 +450,7 @@ const Admin: React.FC = () => {
 
   const getFilteredRegistrations = () => {
     let result = [...registrations];
-    
+
     // Status Filter
     if (rosterFilterStatus === 'NeedsAdmin') {
       result = result.filter(r => r.status === 'Queued' && r.teacher_approved);
@@ -480,7 +490,7 @@ const Admin: React.FC = () => {
             <IonInput type="number" value={actFormCapacity} onIonInput={e => setActFormCapacity(Number(e.detail.value))} />
           </IonItem>
         </div>
-        
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
           <IonItem lines="none" style={{ '--background': 'var(--eca-bg-input)', borderRadius: '8px', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)' }}>
             <IonLabel position="stacked" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--eca-text-label)' }}>Assign Teacher</IonLabel>
@@ -489,7 +499,7 @@ const Admin: React.FC = () => {
               {teachers.map(t => <IonSelectOption key={t.id} value={t.name}>{t.name}</IonSelectOption>)}
             </IonSelect>
           </IonItem>
- 
+
           <IonItem lines="none" style={{ '--background': 'var(--eca-bg-input)', borderRadius: '8px', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)' }}>
             <IonLabel position="stacked" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--eca-text-label)' }}>Eligible Students</IonLabel>
             <IonSelect interface="popover" value={actFormEligibility} onIonChange={e => setActFormEligibility(e.detail.value)} style={{ color: 'var(--eca-text-secondary)' }}>
@@ -499,7 +509,7 @@ const Admin: React.FC = () => {
             </IonSelect>
           </IonItem>
         </div>
- 
+
         <div style={{ marginBottom: '12px' }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: 'var(--eca-text-secondary)', marginBottom: '8px' }}>OPERATIONAL DAYS *</div>
           <div style={{ display: 'flex', gap: '12px' }}>
@@ -529,7 +539,7 @@ const Admin: React.FC = () => {
       </div>
     );
   };
- 
+
   const renderTeacherFormPanel = () => {
     if (!showTeacherForm) return null;
     return (
@@ -569,7 +579,7 @@ const Admin: React.FC = () => {
       </div>
     );
   };
- 
+
   const renderStudentFormPanel = () => {
     if (!showStudentForm) return null;
     return (
@@ -587,7 +597,7 @@ const Admin: React.FC = () => {
             <IonInput value={studFormNumber} placeholder="e.g. 20260001" onIonInput={e => setStudFormNumber(String(e.detail.value))} />
           </IonItem>
         </div>
- 
+
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '16px' }}>
           <IonItem lines="none" style={{ '--background': 'var(--eca-bg-input)', borderRadius: '8px', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)' }}>
             <IonLabel position="stacked" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--eca-text-label)' }}>Division (SMP/SMA)</IonLabel>
@@ -596,7 +606,7 @@ const Admin: React.FC = () => {
               <IonSelectOption value="SMA">SMA (Senior High)</IonSelectOption>
             </IonSelect>
           </IonItem>
- 
+
           <IonItem lines="none" style={{ '--background': 'var(--eca-bg-input)', borderRadius: '8px', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)' }}>
             <IonLabel position="stacked" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--eca-text-label)' }}>Class / Grade</IonLabel>
             <IonSelect interface="popover" value={studFormClass} placeholder="Select Class" onIonChange={e => setStudFormClass(e.detail.value)} style={{ color: 'var(--eca-text-secondary)' }}>
@@ -605,7 +615,7 @@ const Admin: React.FC = () => {
             </IonSelect>
           </IonItem>
         </div>
- 
+
         <div style={{ display: 'flex', gap: '10px' }}>
           <IonButton size="small" color="success" mode="md" style={{ '--border-radius': '6px' }} onClick={handleSaveStudent}>
             <IonIcon icon={checkmarkCircleOutline} slot="start" /> Save
@@ -797,7 +807,7 @@ const Admin: React.FC = () => {
                     <IonList lines="full" style={{ background: 'transparent' }}>
                       {teachers.map(t => (
                         <IonItem key={t.id} className="premium-list-item" style={{ '--padding-top': '12px', '--padding-bottom': '12px' }}>
-                          <IonLabel>
+                          <IonLabel style={{ margin: 0 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap', marginBottom: '2px' }}>
                               <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#f1f5f9', margin: 0 }}>{t.name}</h3>
                               {t.class_assignment && (
@@ -811,19 +821,36 @@ const Admin: React.FC = () => {
                             <p style={{ color: '#94a3b8', fontSize: '12px', margin: '2px 0 0' }}>
                               Activities: {activities.filter(a => a.teacher_name === t.name).map(a => a.name).join(', ') || '—'}
                             </p>
+                            {isMobile && (
+                              <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
+                                <IonButton size="small" color="warning" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
+                                  onClick={() => { setResetPwdTeacherId(t.id); setResetPwdValue(''); }}
+                                  title="Reset Password">
+                                  <IonIcon icon={keyOutline} />
+                                </IonButton>
+                                <IonButton size="small" color="primary" mode="md" style={{ '--border-radius': '6px' }} onClick={() => openEditTeacherForm(t)}>
+                                  <IonIcon icon={pencilOutline} />
+                                </IonButton>
+                                <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }} onClick={() => handleDeleteTeacher(t.id, t.name)}>
+                                  <IonIcon icon={trashOutline} />
+                                </IonButton>
+                              </div>
+                            )}
                           </IonLabel>
-                          <div slot="end" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                            <IonButton size="small" color="warning" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
-                              onClick={() => { setResetPwdTeacherId(t.id); setResetPwdValue(''); }}>
-                              🔑 Reset Pwd
-                            </IonButton>
-                            <IonButton size="small" color="primary" mode="md" style={{ '--border-radius': '6px' }} onClick={() => openEditTeacherForm(t)}>
-                              <IonIcon icon={pencilOutline} />
-                            </IonButton>
-                            <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }} onClick={() => handleDeleteTeacher(t.id, t.name)}>
-                              <IonIcon icon={trashOutline} />
-                            </IonButton>
-                          </div>
+                          {!isMobile && (
+                            <div slot="end" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                              <IonButton size="small" color="warning" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
+                                onClick={() => { setResetPwdTeacherId(t.id); setResetPwdValue(''); }}>
+                                🔑 Reset Pwd
+                              </IonButton>
+                              <IonButton size="small" color="primary" mode="md" style={{ '--border-radius': '6px' }} onClick={() => openEditTeacherForm(t)}>
+                                <IonIcon icon={pencilOutline} />
+                              </IonButton>
+                              <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }} onClick={() => handleDeleteTeacher(t.id, t.name)}>
+                                <IonIcon icon={trashOutline} />
+                              </IonButton>
+                            </div>
+                          )}
                         </IonItem>
                       ))}
                       {teachers.length === 0 && (
@@ -854,21 +881,21 @@ const Admin: React.FC = () => {
                           <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--eca-text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>
                             <IonIcon icon={funnelOutline} /> FILTER DATA:
                           </div>
-                          
+
                           {/* Class Filter */}
                           <select value={filterStudClass} onChange={e => setFilterStudClass(e.target.value)}
                             style={{ padding: '5px 8px', borderRadius: '6px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', fontWeight: '600', outline: 'none' }}>
                             <option value="All">All Classes</option>
                             {CLASS_GRADES.map(c => <option key={c} value={c}>Class {c}</option>)}
                           </select>
- 
+
                           {/* Activity Filter */}
                           <select value={filterStudActivity} onChange={e => setFilterStudActivity(e.target.value)}
                             style={{ padding: '5px 8px', borderRadius: '6px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', fontWeight: '600', outline: 'none' }}>
                             <option value="All">All Activities</option>
                             {activities.map(act => <option key={act.id} value={act.id}>{act.name}</option>)}
                           </select>
- 
+
                           {/* Day Filter */}
                           <select value={filterStudDay} onChange={e => setFilterStudDay(e.target.value)}
                             style={{ padding: '5px 8px', borderRadius: '6px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', fontWeight: '600', outline: 'none' }}>
@@ -916,17 +943,17 @@ const Admin: React.FC = () => {
                         <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#fca5a5', margin: '0 0 12px', display: 'flex', alignItems: 'center', gap: '6px' }}>
                           <IonIcon icon={alertCircleOutline} /> Students Without Activity
                         </h4>
-                        
+
                         <IonCard style={{ margin: '0 0 16px 0', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
                           <IonCardContent style={{ padding: '12px', display: 'flex', flexWrap: 'wrap', gap: '10px', alignItems: 'center' }}>
                             <div style={{ fontSize: '11px', fontWeight: '700', color: '#fca5a5' }}>CRITERIA:</div>
-                            
+
                             <select value={unregClassFilter} onChange={e => setUnregClassFilter(e.target.value)}
                               style={{ padding: '4px 6px', borderRadius: '4px', background: 'var(--eca-bg-input)', border: '1px solid rgba(239, 68, 68, 0.3)', color: 'var(--eca-color-danger)', fontSize: '11px', fontWeight: '600', outline: 'none' }}>
                               <option value="All">All Classes</option>
                               {CLASS_GRADES.map(c => <option key={c} value={c}>Class {c}</option>)}
                             </select>
- 
+
                             <select value={unregDayFilter} onChange={e => setUnregDayFilter(e.target.value)}
                               style={{ padding: '4px 6px', borderRadius: '4px', background: 'var(--eca-bg-input)', border: '1px solid rgba(239, 68, 68, 0.3)', color: 'var(--eca-color-danger)', fontSize: '11px', fontWeight: '600', outline: 'none' }}>
                               {ALL_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
@@ -970,7 +997,7 @@ const Admin: React.FC = () => {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                     <h3 style={{ fontSize: '18px', fontWeight: '800', color: 'var(--eca-text-primary)', margin: 0 }}>Student Placement Ledger</h3>
                   </div>
- 
+
                   {/* Roster Filter Controls */}
                   <IonCard className="premium-card" style={{ margin: '0 0 20px 0' }}>
                     <IonCardContent style={{ padding: '14px 20px', display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
@@ -978,7 +1005,7 @@ const Admin: React.FC = () => {
                         <IonIcon icon={funnelOutline} />
                         <span>FILTERS:</span>
                       </div>
- 
+
                       {/* Status Filter */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--eca-text-secondary)' }}>Status:</span>
@@ -991,7 +1018,7 @@ const Admin: React.FC = () => {
                           <option value="TeacherRejected">Rejected by Teacher</option>
                         </select>
                       </div>
- 
+
                       {/* Sort Order */}
                       <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                         <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--eca-text-secondary)' }}>Order:</span>
@@ -1009,18 +1036,18 @@ const Admin: React.FC = () => {
                       {getFilteredRegistrations().map(reg => {
                         const act = activities.find(a => a.id === reg.activity_id);
                         const isTeacherApprovedQueue = reg.status === 'Queued' && reg.teacher_approved;
-                        
-                        const otherApprovedOnDay = registrations.find(r => 
-                          r.student_id === reg.student_id && 
-                          r.day_of_week === reg.day_of_week && 
+
+                        const otherApprovedOnDay = registrations.find(r =>
+                          r.student_id === reg.student_id &&
+                          r.day_of_week === reg.day_of_week &&
                           r.status === 'Approved' &&
                           r.id !== reg.id
                         );
 
                         return (
                           <IonItem key={reg.id} className="premium-list-item" style={{ '--padding-top': '12px', '--padding-bottom': '12px' }}>
-                            <IonLabel>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                            <IonLabel style={{ margin: 0 }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', justifyContent: 'space-between' }}>
                                 <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--eca-text-primary)', margin: 0 }}>
                                   {reg.student_name}
                                   <span style={{ fontSize: '11px', padding: '2px 6px', background: 'var(--eca-segment-bg)', color: 'var(--eca-text-secondary)', borderRadius: '8px', fontWeight: '700', marginLeft: '6px' }}>
@@ -1042,49 +1069,102 @@ const Admin: React.FC = () => {
                                   ⚠️ Active backup: "{otherApprovedOnDay.activity_name}" will be automatically replaced upon activation.
                                 </p>
                               )}
-                            </IonLabel>
-                            <div slot="end">
-                              {movingRegId === reg.id ? (
-                                <div style={{ background: 'var(--eca-bg-primary)', padding: '12px', borderRadius: '8px', border: '1px solid var(--eca-border-input)', width: '220px' }}>
-                                  <select value={moveActivityId} onChange={e => setMoveActivityId(e.target.value)}
-                                    style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
-                                    <option value="">Select Activity</option>
-                                    {activities.map(act => <option key={act.id} value={act.id}>{act.name}</option>)}
-                                  </select>
-                                  <select value={moveDay} onChange={e => setMoveDay(e.target.value)}
-                                    style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
-                                    <option value="">Select Day</option>
-                                    {ALL_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
-                                  </select>
-                                  <div style={{ display: 'flex', gap: '6px' }}>
-                                    <IonButton size="small" color="success" mode="md" onClick={() => handleMoveStudent(reg)}>Move</IonButton>
-                                    <IonButton size="small" color="medium" mode="md" onClick={() => setMovingRegId(null)}>Cancel</IonButton>
-                                  </div>
-                                </div>
-                              ) : (
-                                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-                                  {isTeacherApprovedQueue && (
-                                    <IonButton size="small" color="success" mode="md" style={{ '--border-radius': '6px', fontWeight: '700' }}
-                                      onClick={() => handlePromoteStudent(reg.id, reg.student_name, reg.activity_name)}>
-                                      <IonIcon icon={starOutline} slot="start" />
-                                      Activate
-                                    </IonButton>
+
+                              {/* Mobile actions & move selector inside label */}
+                              {isMobile && (
+                                <div style={{ marginTop: '12px' }}>
+                                  {movingRegId === reg.id ? (
+                                    <div style={{ background: 'var(--eca-bg-primary)', padding: '12px', borderRadius: '8px', border: '1px solid var(--eca-border-input)', width: '100%', boxSizing: 'border-box' }}>
+                                      <select value={moveActivityId} onChange={e => setMoveActivityId(e.target.value)}
+                                        style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
+                                        <option value="">Select Activity</option>
+                                        {activities.map(act => <option key={act.id} value={act.id}>{act.name}</option>)}
+                                      </select>
+                                      <select value={moveDay} onChange={e => setMoveDay(e.target.value)}
+                                        style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
+                                        <option value="">Select Day</option>
+                                        {ALL_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
+                                      </select>
+                                      <div style={{ display: 'flex', gap: '6px' }}>
+                                        <IonButton size="small" color="success" mode="md" onClick={() => handleMoveStudent(reg)}>Move</IonButton>
+                                        <IonButton size="small" color="medium" mode="md" onClick={() => setMovingRegId(null)}>Cancel</IonButton>
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <div style={{ display: 'flex', gap: '8px' }}>
+                                      {isTeacherApprovedQueue && (
+                                        <IonButton size="small" color="success" mode="md" style={{ '--border-radius': '6px' }}
+                                          onClick={() => handlePromoteStudent(reg.id, reg.student_name, reg.activity_name)}
+                                          title="Activate">
+                                          <IonIcon icon={starOutline} />
+                                        </IonButton>
+                                      )}
+                                      <IonButton size="small" color="tertiary" mode="md" style={{ '--border-radius': '6px' }}
+                                        onClick={() => { setMovingRegId(reg.id); setMoveActivityId(reg.activity_id); setMoveDay(reg.day_of_week); }}
+                                        title="Move">
+                                        <IonIcon icon={swapHorizontalOutline} />
+                                      </IonButton>
+                                      <IonButton size="small" color="warning" mode="md" style={{ '--border-radius': '6px' }}
+                                        onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}
+                                        title="Release">
+                                        <IonIcon icon={closeCircleOutline} />
+                                      </IonButton>
+                                      <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
+                                        onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}
+                                        title="Delete">
+                                        <IonIcon icon={trashOutline} />
+                                      </IonButton>
+                                    </div>
                                   )}
-                                  <IonButton size="small" color="tertiary" mode="md" style={{ '--border-radius': '6px' }}
-                                    onClick={() => { setMovingRegId(reg.id); setMoveActivityId(reg.activity_id); setMoveDay(reg.day_of_week); }}>
-                                    Move
-                                  </IonButton>
-                                  <IonButton size="small" color="warning" mode="md" style={{ '--border-radius': '6px' }}
-                                    onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}>
-                                    Release
-                                  </IonButton>
-                                  <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
-                                    onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}>
-                                    <IonIcon icon={trashOutline} />
-                                  </IonButton>
                                 </div>
                               )}
-                            </div>
+                            </IonLabel>
+
+                            {/* Desktop actions in slot="end" */}
+                            {!isMobile && (
+                              <div slot="end">
+                                {movingRegId === reg.id ? (
+                                  <div style={{ background: 'var(--eca-bg-primary)', padding: '12px', borderRadius: '8px', border: '1px solid var(--eca-border-input)', width: '220px' }}>
+                                    <select value={moveActivityId} onChange={e => setMoveActivityId(e.target.value)}
+                                      style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
+                                      <option value="">Select Activity</option>
+                                      {activities.map(act => <option key={act.id} value={act.id}>{act.name}</option>)}
+                                    </select>
+                                    <select value={moveDay} onChange={e => setMoveDay(e.target.value)}
+                                      style={{ width: '100%', padding: '6px', borderRadius: '4px', marginBottom: '8px', background: 'var(--eca-bg-input)', border: '1px solid var(--eca-border-input)', color: 'var(--eca-text-primary)', fontSize: '12px', outline: 'none' }}>
+                                      <option value="">Select Day</option>
+                                      {ALL_DAYS.map(d => <option key={d} value={d}>{d}</option>)}
+                                    </select>
+                                    <div style={{ display: 'flex', gap: '6px' }}>
+                                      <IonButton size="small" color="success" mode="md" onClick={() => handleMoveStudent(reg)}>Move</IonButton>
+                                      <IonButton size="small" color="medium" mode="md" onClick={() => setMovingRegId(null)}>Cancel</IonButton>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                                    {isTeacherApprovedQueue && (
+                                      <IonButton size="small" color="success" mode="md" style={{ '--border-radius': '6px', fontWeight: '700' }}
+                                        onClick={() => handlePromoteStudent(reg.id, reg.student_name, reg.activity_name)}>
+                                        <IonIcon icon={starOutline} slot="start" />
+                                        Activate
+                                      </IonButton>
+                                    )}
+                                    <IonButton size="small" color="tertiary" mode="md" style={{ '--border-radius': '6px' }}
+                                      onClick={() => { setMovingRegId(reg.id); setMoveActivityId(reg.activity_id); setMoveDay(reg.day_of_week); }}>
+                                      Move
+                                    </IonButton>
+                                    <IonButton size="small" color="warning" mode="md" style={{ '--border-radius': '6px' }}
+                                      onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}>
+                                      Release
+                                    </IonButton>
+                                    <IonButton size="small" color="danger" fill="outline" mode="md" style={{ '--border-radius': '6px' }}
+                                      onClick={() => handleReleaseRegistration(reg.id, reg.student_name)}>
+                                      <IonIcon icon={trashOutline} />
+                                    </IonButton>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </IonItem>
                         );
                       })}
